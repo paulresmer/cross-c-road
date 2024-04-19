@@ -22,10 +22,10 @@ We would like your final project page to have the following structure:
 - Team work (if applicable)
 - Outside Resrouces
 
-So the headings we expct to see are.
+## The section headings we expct to see are:
 
 #### Overview
-This should have the video and the system diagram in it. You can embed an youtube video here. Please use a horizontal layout for the video if possible.
+In addition to the text, this should have the video and the system diagram in it. You can embed an youtube video here. Please use a horizontal layout for the video if possible.
 #### Technical Approach
 Use pictures/diagram where appropriate
 #### Testing and Debugging
