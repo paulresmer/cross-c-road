@@ -1,0 +1,83 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+.logo {
+  height: auto;
+  max-height: 20em;
+  padding-right: 0em;
+  max-width: 100%;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.diagram3 {
+  height: auto;
+  max-height: 100em;
+  padding-right: 0em;
+  max-width: 100%;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.haha {
+  padding-top: 2em;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.about {
+  text-align: left;
+  height: auto;
+  max-width: 100%;
+  margin-top: -8%;
+}
+
+.name {
+  font-size: 3em;
+}
+
+.routes {
+  margin-top: -1%;
+  font-size: 1em;
+}
+
+.technical-approach {
+  width: 100%;
+}
+
+h3 {
+  font-size: 1.6em;
+  margin-bottom: -1%;
+}
+
+h4 {
+  font-size: 1.6em;
+  margin-bottom: 4%;
+  margin-top: 4%;
+}
+
+.body {
+  font-size: 1em;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.card {
+  padding: 2em;
+  font-size: 1em;
+}
+
+.read-the-docs {
+  color: #888;
+  font-size: 1em
+}
