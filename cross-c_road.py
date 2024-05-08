@@ -1,6 +1,10 @@
 import pygame
 import sys
 import random
+import serial
+import json
+
+ser = serial.Serial("COM3", 115200, timeout=1)
 
 pygame.init()
 
@@ -20,8 +24,7 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Infinite Frogger")
-
+pygame.display.set_caption("cross-c road")
 clock = pygame.time.Clock()
 
 
@@ -66,18 +69,17 @@ class Vehicle(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += self.speed
         if self.rect.x > SCREEN_WIDTH:
-            self.rect.x = -VEHICLE_WIDTH  # Reset position to simulate continuous flow
+            self.rect.x = -VEHICLE_WIDTH
 
 
 # reset
 def reset_game(vehicles, all_sprites):
     vehicles.empty()
     all_sprites.empty()
-
     frog = Frog()
     all_sprites.add(frog)
     for lane in range(NUM_LANES_VISIBLE - 2):
-        for _ in range(random.randint(0, 2)):  # num vehicles perlane
+        for _ in range(random.randint(0, 2)):
             x = random.randint(0, SCREEN_WIDTH)
             vehicle = Vehicle(lane, x)
             vehicles.add(vehicle)
@@ -85,44 +87,50 @@ def reset_game(vehicles, all_sprites):
     return frog, vehicles, all_sprites
 
 
-# main loop
 def main():
     frog, vehicles, all_sprites = reset_game(
         pygame.sprite.Group(), pygame.sprite.Group()
     )
 
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+    try:
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            frog.move("UP")
-        if keys[pygame.K_DOWN]:
-            frog.move("DOWN")
-        if keys[pygame.K_LEFT]:
-            frog.move("LEFT")
-        if keys[pygame.K_RIGHT]:
-            frog.move("RIGHT")
+            # serial check
+            if ser.in_waiting > 0:
+                line = ser.readline().decode("utf-8").rstrip()
+                data = json.loads(line)
+                if data.get("buttonPressed"):
+                    frog.move("UP")
+                if "direction" in data:
+                    frog.move(data["direction"])
 
-        vehicles.update()
+            vehicles.update()
 
-        # ? collideany
-        if pygame.sprite.spritecollideany(frog, vehicles):
-            print("Frog hit! Game resetting...")
-            frog, vehicles, all_sprites = reset_game(vehicles, all_sprites)
+            # ? collideany
+            if pygame.sprite.spritecollideany(frog, vehicles):
+                print("hit")
+                frog, vehicles, all_sprites = reset_game(vehicles, all_sprites)
 
-        # frog has reach ed top
-        if frog.rect.y <= 0:
-            print("Frog reached the top! Game resetting...")
-            frog, vehicles, all_sprites = reset_game(vehicles, all_sprites)
+            # frog has reach ed top
+            if frog.rect.y <= -1:
+                print("reached top")
+                frog, vehicles, all_sprites = reset_game(vehicles, all_sprites)
 
-        screen.fill(BLACK)
-        all_sprites.draw(screen)
-        pygame.display.flip()
-        clock.tick(FPS)
+            screen.fill(BLACK)
+            all_sprites.draw(screen)
+            pygame.display.flip()
+            clock.tick(FPS)
+    finally:
+        ser.close()
+        print("Closed connection.")
+
+
+if __name__ == "__main__":
+    main()
 
 
 if __name__ == "__main__":
