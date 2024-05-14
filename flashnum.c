@@ -1,4 +1,4 @@
-#include "SegLCD.h"
+#include "flashnum.h"
 
 static const uint8_t LCD_Frontplane_Pin[LCD_NUM_FRONTPLANE_PINS] = {
     LCD_FRONTPLANE0, LCD_FRONTPLANE1, LCD_FRONTPLANE2, LCD_FRONTPLANE3,
