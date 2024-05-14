@@ -5,10 +5,34 @@
 #include "clock_config.h"
 #include "MKL46Z4.h"
 #include "fsl_debug_console.h"
+#include "fsl_uart.h"
+#include "SegLCD.h"
 
 /* defs */
 #define SWITCH_1_PIN 3
 #define TOUCH_THRESHOLD 1000 // touch threshold (sens increases -> 0)
+
+void uart_init()
+{
+  uart_config_t config;
+
+  UART_GetDefaultConfig(&config);
+  config.baudRate_Bps = 115200;
+  config.enableTx = true;
+  config.enableRx = true;
+
+  UART_Init(UART2, &config, CLOCK_GetFreq(UART2_CLK_SRC));
+}
+
+void read_score(void)
+{
+  if (UART0->S1 & UART_S1_RDRF_MASK)
+  {
+    uint8_t received = UART0->D;
+    PRINTF("{ \"scoreReceived\": %d }\r\n", received);
+    SegLCD_DisplayDecimal(received);
+  }
+}
 
 void Touch_Init()
 {
@@ -26,10 +50,10 @@ void Touch_Init()
                 TSI_GENCS_EOSF_MASK; // end of scan flag, set to 1 to clear
 }
 
-/*  read touch sesnor from lowto high capciatcance */
+/* read touch sensor from low to high capacitance */
 int Touch_Scan_LH(void)
 {
-  TSI0->DATA = TSI_DATA_TSICH(10u); // chnanhel 10
+  TSI0->DATA = TSI_DATA_TSICH(10u); // channel 10
   TSI0->DATA |= TSI_DATA_SWTS_MASK;
   int scan = (TSI0->DATA & TSI_DATA_TSICNT_MASK);
   TSI0->GENCS |= TSI_GENCS_EOSF_MASK;
@@ -44,7 +68,8 @@ int main(void)
 #ifndef BOARD_INIT_DEBUG_CONSOLE_PERIPHERAL
   BOARD_InitDebugConsole();
 #endif
-
+  uart_init();
+  SegLCD_Init(); // initialize the SLCD
   SIM->SCGC5 |= SIM_SCGC5_PORTC_MASK;
   PORTC->PCR[SWITCH_1_PIN] &= ~PORT_PCR_MUX_MASK;
   PORTC->PCR[SWITCH_1_PIN] |= PORT_PCR_MUX(1);
@@ -52,7 +77,7 @@ int main(void)
   PORTC->PCR[SWITCH_1_PIN] |= PORT_PCR_PE_MASK | PORT_PCR_PS_MASK;
 
   Touch_Init();
-  int lastTouchState = 0;
+  int lastTouchState = 0; // store the last state of touch
 
   while (1)
   {
@@ -63,11 +88,12 @@ int main(void)
     {
       PRINTF("{ \"touchDetected\": true }\r\n");
     }
-    lastTouchState = currentTouchState;
+    lastTouchState = currentTouchState; // update the last state
 
     if (!(GPIOC->PDIR & (1U << SWITCH_1_PIN)))
     {
       PRINTF("{ \"buttonPressed\": true }\r\n");
+      read_score();
       while (!(GPIOC->PDIR & (1U << SWITCH_1_PIN)))
         ;
     }

@@ -13,6 +13,7 @@ try:
                 print("button pressed")
             if data.get("touchDetected", False):
                 print("touch detected")
+
         time.sleep(0.1)
 finally:
     ser.close()
