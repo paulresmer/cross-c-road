@@ -1,14 +1,17 @@
+/* Ensuring the root container has a fixed max-width and is centered */
 #root {
-  max-width: 1280px;
+  max-width: 1150px;
   margin: 0 auto;
   padding: 1rem;
   text-align: center;
 }
 
+/* General styles for other elements */
 .logo {
   height: auto;
-  max-height: 20em;
-  padding-right: 0em;
+  max-height: 23em;
+  padding-right: 1em;
+  margin-top: -0.8em;
   max-width: 100%;
   will-change: filter;
   transition: filter 300ms;
@@ -16,11 +19,14 @@
 
 .diagram3 {
   height: auto;
-  max-height: 100em;
+  max-height: 120em;
   padding-right: 0em;
   max-width: 100%;
   will-change: filter;
   transition: filter 300ms;
+  margin-top: -2em;
+  margin-left: -1em;
+  /* Adjust this value to move the diagram up */
 }
 
 .haha {
@@ -47,6 +53,10 @@
 
 .technical-approach {
   width: 100%;
+  padding-left: 2em;
+  /* Add this line to move it to the right */
+  margin-top: -1.7em;
+  /* Adjust this value to set the minimum distance from the image above */
 }
 
 h3 {
@@ -55,7 +65,8 @@ h3 {
 }
 
 h4 {
-  font-size: 1.6em;
+  font-size: 1.2em;
+  /* Updated to make smaller */
   margin-bottom: 4%;
   margin-top: 4%;
 }
@@ -79,5 +90,40 @@ h4 {
 
 .read-the-docs {
   color: #888;
-  font-size: 1em
+  font-size: 1em;
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 1050px) {
+  .haha {
+    grid-template-columns: 1fr;
+    padding-top: 1em;
+  }
+
+  .about {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .name {
+    font-size: 2em;
+  }
+
+  .routes {
+    font-size: 0.9em;
+  }
+
+  h3,
+  h4 {
+    font-size: 1em;
+  }
+
+  .body {
+    font-size: 0.9em;
+  }
+
+  .card {
+    padding: 1em;
+    font-size: 0.9em;
+  }
 }
