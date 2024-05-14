@@ -79,7 +79,7 @@ class Frog(pygame.sprite.Sprite):
                 self.rect.y -= LANE_HEIGHT
                 self.score += 1
                 encode_score = self.score.to_bytes(1, "big")
-                print(encode_score)
+                print(self.score)
                 ser.write(encode_score)
             elif direction == "DOWN":
                 self.rect.y += LANE_HEIGHT
@@ -157,7 +157,6 @@ def main():
             # serial check
             if ser.in_waiting > 0:
                 line = ser.readline().decode("utf-8").rstrip()
-                print(line)
                 data = json.loads(line)
                 if data.get("touchDetected"):
                     game_started = True  # start the game on touch detected
@@ -190,7 +189,7 @@ def main():
 
                 # frog has reach ed top
                 if frog.rect.y <= -1:
-                    print("reached top")
+                    print("new level!")
                     frog, vehicles, all_sprites = reset_game(
                         vehicles, all_sprites, frog, vehicle_speed, initial_vehicles
                     )
