@@ -33,6 +33,14 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("cross-c road")
 clock = pygame.time.Clock()
 
+# load sounds
+move_sound = pygame.mixer.Sound("./sounds/move.wav")
+collision_sound = pygame.mixer.Sound("./sounds/collision.wav")
+level_up_sound = pygame.mixer.Sound("./sounds/level_up.wav")
+
+# load background music
+pygame.mixer.music.load("./sounds/background_music.mp3")
+
 # load images
 frog_filename = "./images/our_frog.png"
 car_filename = "./images/our_car.png"
@@ -65,6 +73,7 @@ class Frog(pygame.sprite.Sprite):
         self.last_move_time = 0
         self.score = 0
         self.move_cooldown = INITIAL_MOVE_COOLDOWN
+        self.move_sound = move_sound
 
     def can_move(self):
         current_time = pygame.time.get_ticks()
@@ -75,6 +84,7 @@ class Frog(pygame.sprite.Sprite):
 
     def move(self, direction):
         if self.can_move():
+            self.move_sound.play()
             if direction == "UP":
                 self.rect.y -= LANE_HEIGHT
                 self.score += 1
@@ -158,8 +168,10 @@ def main():
             if ser.in_waiting > 0:
                 line = ser.readline().decode("utf-8").rstrip()
                 data = json.loads(line)
-                if data.get("touchDetected"):
-                    game_started = True  # start the game on touch detected
+                if not game_started:
+                    if data.get("touchDetected"):
+                        game_started = True  # start the game on touch detected
+                        pygame.mixer.music.play(-1)  # Start playing music here
                 if game_started:
                     if data.get("touchDetected"):
                         frog.move("UP")
@@ -175,6 +187,7 @@ def main():
 
                 # ? collideany
                 if pygame.sprite.spritecollideany(frog, vehicles):
+                    collision_sound.play()
                     print("hit")
                     frog.score = 0
                     current_background_index = 0
@@ -189,6 +202,7 @@ def main():
 
                 # frog has reach ed top
                 if frog.rect.y <= -1:
+                    level_up_sound.play()
                     print("new level!")
                     frog, vehicles, all_sprites = reset_game(
                         vehicles, all_sprites, frog, vehicle_speed, initial_vehicles
