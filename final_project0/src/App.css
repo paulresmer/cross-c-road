@@ -1,4 +1,3 @@
-/* Ensuring the root container has a fixed max-width and is centered */
 #root {
   max-width: 1150px;
   margin: 0 auto;
@@ -6,33 +5,56 @@
   text-align: center;
 }
 
-/* General styles for other elements */
 .logo {
   height: auto;
-  max-height: 23em;
-  padding-right: 1em;
-  margin-top: -0.8em;
+  max-height: 24em;
+  padding-right: 0em;
+  margin-top: 0;
   max-width: 100%;
   will-change: filter;
   transition: filter 300ms;
+}
+
+.youtube-video {
+  width: 80%;
+  height: 255px;
+  margin-top: 1em;
+  border: none;
 }
 
 .diagram3 {
   height: auto;
   max-height: 120em;
-  padding-right: 0em;
-  max-width: 100%;
+  padding-right: 0;
+  max-width: 95%;
   will-change: filter;
   transition: filter 300ms;
-  margin-top: -2em;
-  margin-left: -1em;
-  /* Adjust this value to move the diagram up */
+  margin-top: -1em;
+  margin-left: 0em;
+}
+
+.diagram4 {
+  height: auto;
+  max-height: 100em;
+  padding-right: 0;
+  max-width: 85%;
+  will-change: filter;
+  transition: filter 300ms;
+  margin-top: 1.5em;
+  margin-left: 1em;
 }
 
 .haha {
   padding-top: 2em;
-  display: inline-grid;
+  display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+.haha2 {
+  padding-top: 2em;
+  display: block;
+  text-align: left;
 }
 
 .about {
@@ -40,10 +62,20 @@
   height: auto;
   max-width: 100%;
   margin-top: -8%;
+  padding-right: 2em;
 }
 
 .name {
   font-size: 3em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.emoji {
+  width: 1.5em;
+  height: 1.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 .routes {
@@ -54,21 +86,26 @@
 .technical-approach {
   width: 100%;
   padding-left: 2em;
-  /* Add this line to move it to the right */
+  padding-right: 2em;
   margin-top: -1.7em;
-  /* Adjust this value to set the minimum distance from the image above */
 }
 
 h3 {
   font-size: 1.6em;
-  margin-bottom: -1%;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
 }
 
 h4 {
-  font-size: 1.2em;
-  /* Updated to make smaller */
-  margin-bottom: 4%;
-  margin-top: 4%;
+  font-size: 1.1em;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+h5 {
+  font-size: 1.1em;
+  margin-top: -1.8em;
+  margin-bottom: 0.5em;
 }
 
 .body {
@@ -88,21 +125,42 @@ h4 {
   font-size: 1em;
 }
 
+.left-align {
+  text-align: left;
+}
+
 .read-the-docs {
   color: #888;
   font-size: 1em;
 }
 
-/* Adjustments for smaller screens */
+.console {
+  background-color: #282c34;
+  color: #abb2bf;
+  padding: 1em;
+  border-radius: 5px;
+  border: 1px solid #444;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: auto;
+}
+
 @media (max-width: 1050px) {
   .haha {
     grid-template-columns: 1fr;
     padding-top: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .about {
-    margin-top: 0;
+  .about,
+  .about.technical-approach {
+    margin: 0 auto;
+    /* Centering the element */
     text-align: center;
+    padding: 0 1em;
+    width: 90%;
+    /* Adjust the width as needed */
   }
 
   .name {
@@ -116,6 +174,8 @@ h4 {
   h3,
   h4 {
     font-size: 1em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
   }
 
   .body {
