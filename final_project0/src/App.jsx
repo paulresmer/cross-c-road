@@ -3,6 +3,7 @@ import kiki from '../src/assets/crossyroad.png'
 import frog from '../src/assets/frog.gif'
 import revfrog from '../src/assets/revfrog.gif'
 import diagram3 from '../src/assets/diagram3.png'
+import diagram4 from '../src/assets/diagram4.png'
 import './App.css'
 import Typography from '@mui/material/Typography';
 
@@ -162,13 +163,13 @@ ser.write(encode_score)`;
             <img src={diagram3} className="diagram3" alt="Technical Diagram" />
             <iframe
               className="youtube-video"
-              src="https://www.youtube.com/embed/CfarSikf71E?si=HbEoZZS7IAHcMnlf"
+              src="https://www.youtube.com/embed/3l0JEteiDQQ?si=PKIH2va-Dai_go9F"
               title="YouTube video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-            <img src={diagram3} className="diagram4" alt="Technical Diagram" />
+            <img src={diagram4} className="diagram4" alt="Technical Diagram" />
           </div>
         </div>
 
