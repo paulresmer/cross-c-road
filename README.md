@@ -36,8 +36,5 @@ it, enter this command:
 
    pip install pygame 
 
-<!-- # Feedback
- Proposal Feedback: I assume the game would run on a computer? You can totally use the board as in input device for a game, but you need to make sure that some significant amount of the processing happens on the board. Just sending buttons press events is not complex enough. There are a few ways you can expand on this, either you do some level selecting game logic at startup and send that over to set up the game, or you could use a sensor that needs some on-board processing like decoding tilts and/or the capacitive touch sensor.  -->
-
 ## Project Web-Page
 [https://pages.github.coecis.cornell.edu/ece3140-sp2024/jse77-pgr39](https://pages.github.coecis.cornell.edu/ece3140-sp2024/jse77-pgr39)
